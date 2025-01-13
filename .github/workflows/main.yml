@@ -1,21 +1,44 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Upload to Another Repository
+
 on:
-   push:
+  push:
     branches:
-     - main
+      - main   # Trigger the pipeline on push to 'main' branch (or other branches as needed)
+
 jobs:
-  Explore-GitHub-Actions:
+  upload:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      # Step 1: Checkout the source repository (the one that triggers the action)
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Git configuration for the target repository
+      - name: Set up Git
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          git config --global user.name "pradeepgroot"
+          git config --global user.email "pradeep.negi@grootsoftwares.com"
+
+      # Step 3: Clone the target repository
+      - name: Clone target repository
+        run: |
+          git clone https://github.com/pradeepgroot/schools.git target-repo
+          
+      # Step 4: Copy the code to the target repository
+      - name: Copy files to target repository
+        run: |
+          cp -r ./schools/* ./https://github.com/pradeepgroot/tst.git/
+        
+      # Step 5: Commit and push changes to the target repository
+      - name: Commit and push to target repository
+        run: |
+          cd target-repo
+          git add .
+          git commit -m "Automated upload from source repository"
+          git push https://github.com/pradeepgroot/tst.git main
+
+      # Step 6: Optionally, clean up the cloned repository
+      - name: Clean up
+        run: |
+          rm -rf target-repo
