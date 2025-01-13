@@ -28,7 +28,7 @@ jobs:
       # Step 4: Copy the code to the target repository
       - name: Copy files to target repository
         run: |
-          cp -r ./tstSchoolTraget/* ./https://github.com/pradeepgroot/tst.git/
+          cp -r ./WebApplication1/* ./https://github.com/pradeepgroot/tst.git/
         
       # Step 5: Commit and push changes to the target repository
       - name: Commit and push to target repository
