@@ -36,7 +36,7 @@ jobs:
           cd target-repo
           git add .
           git commit -m "Automated upload from source repository"
-          git push https://github.com/pradeepgroot/tst.git main
+          git push https://github.com/pradeepgroot/schools.git main
 
       # Step 6: Optionally, clean up the cloned repository
       - name: Clean up
